@@ -155,24 +155,13 @@ export const whatsAppWebhookRequestBodySchema = z.object({
             metadata: z.object({
               display_phone_number: z.string(),
             }),
-            messages: z.array(
-              z.object({
-                from: z.string(),
-                id: z.string(),
-                timestamp: z.string(),
-                type: z.string(),
-                text: z.object({
-                  body: z.string(),
-                }),
-              })
-            ).optional(),
+            messages: z.array(incomingMessageSchema).optional(),
           }),
         })
       ),
     })
   ),
 });
-
 
 export const whatsAppCredentialsSchema = z
   .object({
