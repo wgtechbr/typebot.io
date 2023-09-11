@@ -38,8 +38,13 @@ export const receiveMessagePreview = publicProcedure
       entry?.[0]?.changes?.[0]?.value?.contacts &&
       entry[0].changes[0].value.contacts.length > 0
     ) {
+      for (const contact of entry[0].changes[0].value.contacts) {
+        if (contact?.wa_id) {
+          contactWaId = contact.wa_id;
+          break;
+        }
+      }
       contactName = entry[0].changes[0].value.contacts[0]?.profile?.name ?? ''
-      contactWaId = entry[0].changes[0].value.contacts[0]?.wa_id ?? ''
     }
 
     return resumeWhatsAppFlow({
