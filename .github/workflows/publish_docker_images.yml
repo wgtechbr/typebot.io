@@ -22,7 +22,7 @@ jobs:
         id: image-meta
         uses: docker/metadata-action@v4
         with:
-          images: baptistearno/typebot-${{ matrix.app }}
+          images: wgtechbr/typebot-${{ matrix.app }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -75,7 +75,7 @@ jobs:
         id: image-meta
         uses: docker/metadata-action@v4
         with:
-          images: baptistearno/typebot-${{ matrix.app }}
+          images: wgtech/typebot-${{ matrix.app }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
