@@ -23,19 +23,19 @@ export const receiveMessage = publicProcedure
     })
   )
   .mutation(async ({ input: { entry, workspaceId, phoneNumberId } }) => {
-    const receivedMessage = entry.at(0)?.changes.at(0)?.value.messages?.at(0)
+    const receivedMessage = entry?.[0]?.changes?.[0]?.value?.messages?.[0]
     if (isNotDefined(receivedMessage)) return { message: 'No message found' }
 
     let contactName = ''
     let contactWaId = ''
 
-    // Check if the contacts array is defined and contains elements
+    // Check if contacts array is defined and contains elements
     if (
-      entry.at(0)?.changes.at(0)?.value?.contacts &&
-      entry.at(0)?.changes.at(0)?.value.contacts.length > 0
+      entry?.[0]?.changes?.[0]?.value?.contacts &&
+      entry[0].changes[0].value.contacts.length > 0
     ) {
-      contactName = entry.at(0)?.changes.at(0)?.value.contacts[0]?.profile?.name ?? ''
-      contactWaId = entry.at(0)?.changes.at(0)?.value.contacts[0]?.wa_id ?? ''
+      contactName = entry[0].changes[0].value.contacts[0]?.profile?.name ?? ''
+      contactWaId = entry[0].changes[0].value.contacts[0]?.wa_id ?? ''
     }
 
     return resumeWhatsAppFlow({
