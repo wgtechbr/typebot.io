@@ -27,8 +27,8 @@ export const receiveMessage = publicProcedure
     if (isNotDefined(receivedMessage)) return { message: 'No message found' }
     const contactName =
       entry.at(0)?.changes.at(0)?.value?.contacts?.at(0)?.profile?.name ?? ''
-    const contactPhoneNumber =
-      entry.at(0)?.changes.at(0)?.value?.contacts?.wa_id ?? ''
+    const contactWaId =
+      entry.at(0)?.changes.at(0)?.value?.contacts?.at(0)?.wa_id ?? ''
     return resumeWhatsAppFlow({
       receivedMessage,
       sessionId: `wa-${phoneNumberId}-${receivedMessage.from}`,
@@ -36,7 +36,7 @@ export const receiveMessage = publicProcedure
       workspaceId,
       contact: {
         name: contactName,
-        phoneNumber: contactPhoneNumber,
+        phoneNumber: contactWaId, // Use wa_id instead of display_phone_number
       },
     })
   })
