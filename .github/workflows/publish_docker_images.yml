@@ -44,7 +44,7 @@ jobs:
           cache-to: type=gha,scope=${{ matrix.app }}-amd,mode=max
           build-args: |
             SCOPE=${{ matrix.app }}
-          outputs: type=image,name=baptistearno/typebot-${{ matrix.app }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=wgtechbr/typebot-${{ matrix.app }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
@@ -75,7 +75,7 @@ jobs:
         id: image-meta
         uses: docker/metadata-action@v4
         with:
-          images: wgtech/typebot-${{ matrix.app }}
+          images: wgtechbr/typebot-${{ matrix.app }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -97,7 +97,7 @@ jobs:
           cache-to: type=gha,scope=${{ matrix.app }}-arm,mode=max
           build-args: |
             SCOPE=${{ matrix.app }}
-          outputs: type=image,name=baptistearno/typebot-${{ matrix.app }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=wgtechbr/typebot-${{ matrix.app }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
@@ -134,7 +134,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: baptistearno/typebot-${{ matrix.app }}
+          images: wgtechbr/typebot-${{ matrix.app }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -149,7 +149,7 @@ jobs:
         working-directory: /tmp/digests/${{ matrix.app }}
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf 'baptistearno/typebot-${{ matrix.app }}@sha256:%s ' *)
+            $(printf 'wgtechbr/typebot-${{ matrix.app }}@sha256:%s ' *)
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect baptistearno/typebot-${{ matrix.app }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect wgtechbr/typebot-${{ matrix.app }}:${{ steps.meta.outputs.version }}
