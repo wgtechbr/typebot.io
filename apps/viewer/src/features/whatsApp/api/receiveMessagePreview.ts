@@ -26,12 +26,22 @@ export const receiveMessagePreview = publicProcedure
         code: 'INTERNAL_SERVER_ERROR',
         message: 'WHATSAPP_PREVIEW_FROM_PHONE_NUMBER_ID is not defined',
       })
+
     const receivedMessage = entry.at(0)?.changes.at(0)?.value.messages?.at(0)
     if (isNotDefined(receivedMessage)) return { message: 'No message found' }
-    const contactName =
-      entry.at(0)?.changes.at(0)?.value?.contacts?.at(0)?.profile?.name ?? ''
-    const contactWaId =
-      entry.at(0)?.changes.at(0)?.value?.contacts?.at(0)?.wa_id ?? ''
+
+    let contactName = ''
+    let contactWaId = ''
+
+    // Check if the contacts array is defined and contains elements
+    if (
+      entry.at(0)?.changes.at(0)?.value?.contacts &&
+      entry.at(0)?.changes.at(0)?.value.contacts.length > 0
+    ) {
+      contactName = entry.at(0)?.changes.at(0)?.value.contacts[0]?.profile?.name ?? ''
+      contactWaId = entry.at(0)?.changes.at(0)?.value.contacts[0]?.wa_id ?? ''
+    }
+
     return resumeWhatsAppFlow({
       receivedMessage,
       sessionId: `wa-${receivedMessage.from}-preview`,
