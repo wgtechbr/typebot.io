@@ -31,7 +31,7 @@ export const receiveMessagePreview = publicProcedure
     const contactName =
       entry.at(0)?.changes.at(0)?.value?.contacts?.at(0)?.profile?.name ?? ''
     const contactPhoneNumber =
-      entry.at(0)?.changes.at(0)?.value?.metadata.wa_id ?? ''
+      entry.at(0)?.changes.at(0)?.value?.contacts?.wa_id ?? ''
     return resumeWhatsAppFlow({
       receivedMessage,
       sessionId: `wa-${receivedMessage.from}-preview`,
