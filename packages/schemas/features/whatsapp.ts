@@ -148,19 +148,31 @@ export const whatsAppWebhookRequestBodySchema = z.object({
                   profile: z.object({
                     name: z.string(),
                   }),
+                  wa_id: z.string(), // Adicione a linha "wa_id" aqui
                 })
               )
               .optional(),
             metadata: z.object({
               display_phone_number: z.string(),
             }),
-            messages: z.array(incomingMessageSchema).optional(),
+            messages: z.array(
+              z.object({
+                from: z.string(),
+                id: z.string(),
+                timestamp: z.string(),
+                type: z.string(),
+                text: z.object({
+                  body: z.string(),
+                }),
+              })
+            ).optional(),
           }),
         })
       ),
     })
   ),
-})
+});
+
 
 export const whatsAppCredentialsSchema = z
   .object({
